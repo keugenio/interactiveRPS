@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Interactive RPS</title>
+
+  <!-- JQuery -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>  
+  <script src="assets/js/rps.js"></script>
+
+    <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+  <!-- CSS -->
+  <link rel="stylesheet" type="text/css" href="assets/css/rps.css">  
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Sedgwick+Ave" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="assets/fonts/font-awesome/css/font-awesome.min.css">  
+
+</head>
+
+<body>
+<div class="container"><!-- Main Window -->
+
+  <div class="row d-flex flex-row">
+
+      <div class="panel panel-primary" style="width: 100%">
+        <!-- ***************** main heading ****************** -->
+        <div class="panel-heading d-flex align-items-center justify-content-end"><!-- panel heading -->
+          <div class="mr-auto p-2"> <!-- brand -->
+            <span class="navbar-brand text-white" href="#" style="font-size: 0">
+              <span class="header-title d-inline header-title">Interactive </span>
+              <span class="header-title-bold d-inline header-title">
+                <i class="fa fa-hand-rock-o" aria-hidden="true" ></i>
+                <i class="fa fa-hand-paper-o" aria-hidden="true"></i>
+                <i class="fa fa-hand-scissors-o" aria-hidden="true"></i>                
+              </span>
+            </span>
+          </div>
+          <div class="p-2 d-flex align-items-center"> <!-- info button -->
+            <a href="#" id="infoBtn">
+              <img src="assets/images/rpg/info.png" class="infoIcon"/>
+            </a>        
+          </div>                   
+        </div><!-- panel-heading -->
+
+        <!-- ***************** main body ****************** -->
+        <div class="panel-body">
+          <div class="d-flex align-items-center flex-row justify-content-center">
+            <div class="col-md-6">
+              <div>
+                <div class="panel panel-danger">
+                  <div class="panel-heading" id="playerName">Player</div>
+                  <div class="panel-body d-flex flex-row justify-content-center">
+                      <div id="rockIcon" class="playbutton" data-value="rock"><i class="fa fa-hand-rock-o" aria-hidden="true"></i></div>
+                      <div id="paperIcon" class="playbutton" data-value="paper"><i class="fa fa-hand-paper-o" aria-hidden="true"></i></div>
+                      <div id="scissorIcon" class="playbutton" data-value="scissor"><i class="fa fa-hand-scissors-o" aria-hidden="true"></i></div>
+                  </div>        
+                </div> 
+              </div>             
+            </div>
+            <div class="col-md-2 text">
+              <div>
+                <div class="evaluator" id="evaluator">[]</div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div>
+                <div class="panel panel-danger" >
+                  <div class="panel-heading" id="opponentName">Opponent</div>
+                  <div class="panel-body">
+                    <div class="playbutton" id="opponentIcon">?</div>
+                  </div>         
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex" id="messageBoard">Welcome to Interactive RPS!</div> 
+        </div>
+
+        <!-- ***************** main footer ****************** -->
+        <div class="panel-footer text-right">
+          <span><i class="fa fa-hand-rock-o" aria-hidden="true"></i></span>
+          <span><i class="fa fa-hand-paper-o" aria-hidden="true"></i></span>
+          <span><i class="fa fa-hand-scissors-o" aria-hidden="true"></i></span> 
+        </div>
+      </div><!-- panel -->
+  </div><!--  row -->
+
+
+</div> <!-- Main Window -->
+
+<!--************************ Welcome Window ************************* -->
+<!-- Modal -->
+<div id="editPlayerName" class="modal fade" role="dialog" style="color: blue">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Log in</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="playerForm">
+          <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="name" class="form-control" id="playerNameInput">
+          </div>
+          <button type="submit" class="btn btn-default">Submit</button>
+        </form>          
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ____________________________ instructions _______________________________________ -->
+  <div class="container d-flex justify-content-center align-middle">
+    <div class="panel" id="info">
+      <div class="info-heading panel-heading d-flex justify-content-end">
+        <div class="mr-auto text-center" style="width: 100%">
+          <span>
+            <h1>How to Play Interactive 
+            <i class="fa fa-hand-rock-o" aria-hidden="true"></i>
+            <i class="fa fa-hand-paper-o" aria-hidden="true"></i>
+            <i class="fa fa-hand-scissors-o" aria-hidden="true"></i>
+            </h1> 
+          </span>
+        </div>
+        <div id="infoWindowCloseBtn" class="d-flex align-items-center">
+            <a href="#"><i class="material-icons md-light">highlight_off</i></a>
+        </div>
+      </div> <!-- panel-heading -->     
+      <div class="panel-body ">
+        <ul style="padding: 20px;">
+            <li>Only two users can play at the same time.</li>
+            <li>Both players click either rock, paper or scissors. After the players make their selection, the game will tell them whether a tie occurred or if one player defeated the other.</li>
+            <li>The game will track each player's wins and losses.</li>
+            <li>chat functionality available</li>
+
+        </ul>
+      </div> <!-- panel-body -->
+    </div> <!-- panel -->
+  </div><!-- container -->
+</body>
+
+</html>
