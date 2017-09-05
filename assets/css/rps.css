@@ -81,6 +81,7 @@ a {
   border-radius: 16px!important;
 }
 .panel-footer{
+  font-size: x-large;
   background-color: rgb(15, 151, 151);
   padding-right: 15px;
   border-radius: 0 0 15px 15px!important;

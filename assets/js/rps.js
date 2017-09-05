@@ -316,7 +316,7 @@
           case "paper":
               switch(opponent.move){
                 case "paper":
-                  player.tie ++;
+                  player.ties ++;
                   $("#comparer").html("=");
                   return "It's a tie. No one wins. ";
                   break;
@@ -335,7 +335,7 @@
           default:
               switch(opponent.move){
                 case "scissor":
-                  player.tie ++;
+                  player.ties ++;
                   $("#comparer").html("=");
                   return "It's a tie. No one wins. ";
                   break;
