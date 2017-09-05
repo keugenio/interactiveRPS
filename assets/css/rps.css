@@ -116,18 +116,12 @@ a {
   margin: 5px;
   padding:15px;
   opacity: .75;  
-<<<<<<< HEAD
-  text-align: center;  
-=======
   text-align: center; 
->>>>>>> 59ab2cbc47ad6f0b3bf6d64f704d35bdd489be5f
 }
 .playbutton:hover{
   opacity: .9;
   cursor: pointer; 
 }
-<<<<<<< HEAD
-=======
 
 .disabledButton, .opponentButton, .waiting{
   display: none;  
@@ -142,7 +136,6 @@ a {
   text-align: center; 
 }
 
->>>>>>> 59ab2cbc47ad6f0b3bf6d64f704d35bdd489be5f
 .evaluator{
   color: white;
   background-color: #ff9900;
@@ -162,9 +155,6 @@ a {
   border-top: 3px solid;
   margin-top: 15px;
   padding: 15px;
-<<<<<<< HEAD
-}
-=======
 }
 #opponentName panel-body{
   height 75px;
@@ -172,4 +162,3 @@ a {
 .fa-pencil:hover{
   cursor: pointer; 
 }
->>>>>>> 59ab2cbc47ad6f0b3bf6d64f704d35bdd489be5f
