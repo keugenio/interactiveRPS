@@ -36,7 +36,8 @@
   var rps = database.ref("/rps");
   var gameStart = database.ref("/rps/gameStart"); 
   var player1 = database.ref("/rps/player1");
-  var player2 = database.ref("/rps/player2");  
+  var player2 = database.ref("/rps/player2");
+  var chat = database.ref("/rps/chat");  
   var opponentPointer = null;
   var playerPointer = null;  
 // *************** game start *********
@@ -127,13 +128,15 @@
           opponent.gameName = "player2";        
           opponentPointer = database.ref("/rps/player2");
           playerPointer = database.ref("/rps/player1");
+          chat.set({chat:"Welcome to iRPS"});  
           opponentPointer.once("value", function(snapshot){
             if (snapshot.hasChildren()){
                 opponent.name = snapshot.val().playerName;
                 $("#opponentName").html(opponent.name);
                 opponentPointer.update({move:""});
                 gameStart.set({gameStart:true});
-                $("#last5MovesLabel").text(opponent.name + "'s last 5 moves");                 
+                $("#last5MovesLabel").text(opponent.name + "'s last 5 moves");
+                $("#chatInput").attr("placeholder", "lay the smack on " + opponent.name);
             } else {
                 $("#opponentName").html("not logged in yet");               
             }  
@@ -147,7 +150,8 @@
           opponentPointer = database.ref("/rps/player1");
           playerPointer = database.ref("/rps/player2");
           gameStart.set({gameStart:true});  
-          $("#last5MovesLabel").text(opponent.name + "'s last 5 moves"); 
+          $("#last5MovesLabel").text(opponent.name + "'s last 5 moves");
+          $("#chatInput").attr("placeholder", "lay the smack on " + opponent.name);  
         }
 
     })
@@ -172,6 +176,7 @@
           $("#opponentName").html(opponent.name);
           last5Moves=[];
           $("#last5MovesLabel").text(opponent.name + "'s last 5 moves");
+          $("#chatInput").attr("placeholder", "lay the smack on " + opponent.name); 
         }        
         opponent.wins = snapshot.val().wins;
         opponent.move = snapshot.val().move;
@@ -186,6 +191,7 @@
           $("#opponentName").html(opponent.name);
           last5Moves=[];
           $("#last5MovesLabel").text(opponent.name + "'s last 5 moves");
+          $("#chatInput").attr("placeholder", "lay the smack on " + opponent.name);  
         }
         opponent.wins = snapshot.val().wins;
         opponent.move = snapshot.val().move;
@@ -201,6 +207,29 @@
         $("#messageBoard").html("Let's Play!!");        
       }
   })
+//**************** listen for chat button ************
+  $("#chatForm").on("submit", function(){  
+    event.preventDefault();
+    if (this.elements.chatInput.value != ""){
+      var chatInput = "<div>" + player.name + ": " + this.elements.chatInput.value + "</div>";
+
+      chat.once("value", function(snapshot){
+          var pre = snapshot.val().chat;
+          console.log("pre: " + pre);
+          chat.update({
+            chat: pre+chatInput
+          });
+          $("#chatBox").html(pre+chatInput);
+          $("#chatInput").val("");
+      });  
+    }
+  });
+//**************** listen for new chats **************
+chat.on("value", function(snapshot){
+  $("#chatBox").html(snapshot.val().chat);
+  var height = document.getElementById("chatBox").scrollHeight;
+  $("#chatBox").scrollTop(height);
+});  
 // *************** functions *******************
   function toggleButtons(aBoolean){
     var allPlayButtons=document.getElementsByClassName("playbutton"); 
